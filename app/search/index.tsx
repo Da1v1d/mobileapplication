@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import { HeaderSearch } from "../../components/Header/HeaderSearch/HeaderSearch";
 import useFetch from "../../hooks/useFetch";
 import { Products } from "../../types/ProductTypes";
-import { getAllProducts } from "../../api/products";
+import { ProductsApi } from "../../api/products";
 import { Cards } from "../../components/Cards/Cards";
 import { globalStyles } from "../styles";
+import { Loader } from "../../components/Loader/Loader";
+import { debounce } from "../../utils";
 
 const SearchPage = () => {
   const [searchValue, onChangeText] = useState("");
@@ -15,12 +17,15 @@ const SearchPage = () => {
 
   const handleChange = async (text: string) => {
     onChangeText(text);
-    await fetchData(() => getAllProducts(text));
+
+    const debouncedFetch = debounce(fetchData, 300);
+
+    debouncedFetch(() => ProductsApi.getAllProducts(text));
   };
 
   useEffect(() => {
     (async () => {
-      await fetchData(() => getAllProducts());
+      await fetchData(() => ProductsApi.getAllProducts());
     })();
   }, []);
 
@@ -38,7 +43,8 @@ const SearchPage = () => {
             />
           ),
         }}
-      ></Stack.Screen>
+      />
+      {isLoading && <Loader />}
       {!!data && <Cards products={data.products} />}
     </View>
   );

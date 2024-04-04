@@ -1,27 +1,24 @@
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { HomeCarousel } from "../../components/Carousel/HomeCarousel/HomeCarousel";
-import {
-  FlatList,
-  ScrollView,
-  Text,
-  View,
-  VirtualizedList,
-} from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { globalStyles } from "../styles";
 import { useEffect, useState } from "react";
-import { getProductByCategory } from "../../api/products";
+import { ProductsApi } from "../../api/products";
 import { Products } from "../../types/ProductTypes";
 import { Cards } from "../../components/Cards/Cards";
 import { Link } from "expo-router";
+import { Loader } from "../../components/Loader/Loader";
 
 const Home = () => {
   const [data, setData] = useState<Products["products"][] | null>(null);
+
   useEffect(() => {
+    // ! Byyyyy What's this ? Are you sure about this ?
     (async () => {
       const data = await Promise.all([
-        getProductByCategory("smartphones", 4),
-        getProductByCategory("laptops", 4),
-        getProductByCategory("fragrances", 4),
+        ProductsApi.getProductByCategory("smartphones", 4),
+        ProductsApi.getProductByCategory("laptops", 4),
+        ProductsApi.getProductByCategory("fragrances", 4),
       ]);
       setData([
         data[0].data.products,
@@ -36,10 +33,11 @@ const Home = () => {
       <GestureHandlerRootView>
         <HomeCarousel />
       </GestureHandlerRootView>
+      {!data && <Loader />}
       <FlatList
-        style={{ marginTop: 20 }}
+        style={{ marginTop: 30 }}
         data={data}
-        contentContainerStyle={{ rowGap: 50 }}
+        contentContainerStyle={{ rowGap: 50, paddingBottom: 30 }}
         renderItem={({ item, index }) => (
           <>
             <View

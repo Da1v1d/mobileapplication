@@ -7,6 +7,7 @@ export type UserType = {
   lastName: string | null;
   gender: string | null;
   image: string | null;
+  token?: string;
 };
 
 export type UserContextType = {

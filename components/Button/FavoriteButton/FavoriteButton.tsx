@@ -1,30 +1,29 @@
 import { FC, useEffect, useState } from "react";
 import { Image, ImageSourcePropType, Pressable } from "react-native";
-import { addOrRemoveFromWhishlist, generateFavoriteIcon } from "../../../utils";
+import { addOrRemoveFromWishlist, generateFavoriteIcon } from "../../../utils";
 import { Product } from "../../../types/ProductTypes";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useUser } from "../../../provider/UserProvider";
+import { useUser } from "../../../hooks/useUser";
+import { useWishlist } from "../../../hooks/useWishlist";
 
 export const FavoriteButton: FC<Product> = (product) => {
   const [favoriteIcon, setFavoriteIcon] = useState<ImageSourcePropType>();
-  const { userData } = useUser();
-
-  const handlePressFavoriteButton = async () => {
-    await addOrRemoveFromWhishlist(product);
-    const icon = await generateFavoriteIcon(product.id);
-    setFavoriteIcon(icon);
-  };
+  const {
+    userData: { username },
+  } = useUser();
+  const { wishlist, setWishlist } = useWishlist();
 
   useEffect(() => {
-    (async () => {
-      const icon = await generateFavoriteIcon(product.id);
-      setFavoriteIcon(icon);
-    })();
-  }, []);
+    const icon = generateFavoriteIcon(product.id, wishlist);
+    setFavoriteIcon(icon);
+  }, [wishlist]);
+
+  const handlePressFavoriteButton = async () => {
+    await addOrRemoveFromWishlist(product, wishlist, setWishlist);
+  };
 
   return (
     // if user is not logged in don't show add to whishlist favorite button
-    userData.username && (
+    username && (
       <Pressable onPress={handlePressFavoriteButton}>
         <Image source={favoriteIcon} />
       </Pressable>

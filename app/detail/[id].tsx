@@ -1,24 +1,23 @@
 import { Stack, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
-import { getProductById } from "../../api/products";
+import { useEffect } from "react";
+import { ProductsApi } from "../../api/products";
 import useFetch from "../../hooks/useFetch";
-import { Image, ImageSourcePropType, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { globalStyles } from "../styles";
 import { Product } from "../../types/ProductTypes";
 import { DetailCarousel } from "../../components/Carousel/DetailCarousel/DetailCarousel";
 import { HeaderBack } from "../../components/Header/HeaderBack/HeaderBack";
 import { styles } from "./styles";
-import { generateFavoriteIcon } from "../../utils";
 import { FavoriteButton } from "../../components/Button/FavoriteButton/FavoriteButton";
+import { Loader } from "../../components/Loader/Loader";
 
 const Category = () => {
   const { id } = useLocalSearchParams();
   const { fetchData, isLoading, data: product } = useFetch<Product>();
-  const [favoriteIcon, setFavoriteIcon] = useState<any>();
 
   useEffect(() => {
     (async () => {
-      await fetchData(() => getProductById(id as string));
+      await fetchData(() => ProductsApi.getProductById(id as string));
     })();
   }, []);
 
@@ -32,7 +31,7 @@ const Category = () => {
           headerRight: () => product && <FavoriteButton {...product} />,
         }}
       />
-      {isLoading && <Text>Loading...</Text>}
+      {isLoading && <Loader />}
       {!!product && (
         <View style={{ rowGap: 15 }}>
           <DetailCarousel images={product.images} />

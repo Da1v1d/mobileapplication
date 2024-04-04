@@ -15,7 +15,7 @@ const RootLayout = () => {
         <Stack.Screen
           name="login/index"
           options={{
-            headerTitle: "Login",
+            headerTitle: "",
             presentation: "modal",
             headerLeft: () => (
               <Pressable onPress={() => router.back()}>

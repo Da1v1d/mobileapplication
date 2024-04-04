@@ -1,12 +1,13 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
-import { getProductByCategory } from "../../api/products";
+import { ProductsApi } from "../../api/products";
 import useFetch from "../../hooks/useFetch";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { Cards } from "../../components/Cards/Cards";
 import { globalStyles } from "../styles";
 import { Products } from "../../types/ProductTypes";
 import { HeaderBack } from "../../components/Header/HeaderBack/HeaderBack";
+import { Loader } from "../../components/Loader/Loader";
 
 const Category = () => {
   const { category } = useLocalSearchParams();
@@ -14,7 +15,9 @@ const Category = () => {
 
   useEffect(() => {
     (async () => {
-      await fetchData(() => getProductByCategory(category as string));
+      await fetchData(() =>
+        ProductsApi.getProductByCategory(category as string)
+      );
     })();
   }, []);
 
@@ -27,7 +30,7 @@ const Category = () => {
           headerLeft: () => <HeaderBack />,
         }}
       />
-      {isLoading && <Text>Loading...</Text>}
+      {isLoading && <Loader />}
       {!!data && <Cards products={data.products} />}
     </View>
   );

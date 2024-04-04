@@ -18,7 +18,7 @@ export const Cards: FC<CardsType> = ({ products }) => {
           <Card product={item} />
         </Pressable>
       )}
-      keyExtractor={({ id }) => id as any}
+      keyExtractor={({ id }) => id.toString()}
     />
   );
 };

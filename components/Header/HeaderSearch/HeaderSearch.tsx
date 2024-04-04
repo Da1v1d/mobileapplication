@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef } from "react";
-import { TextInput, TextInputComponent } from "react-native";
+import { TextInput } from "react-native";
 
 type HeaderSearchType = {
   searchValue: string;

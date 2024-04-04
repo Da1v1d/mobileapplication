@@ -1,4 +1,4 @@
-import { Dimensions, ImageBackground, Text, View } from "react-native";
+import { Dimensions, ImageBackground, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import { generateBackground } from "../../../utils";
 import { useState } from "react";

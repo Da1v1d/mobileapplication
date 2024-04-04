@@ -1,11 +1,12 @@
-import { FlatList, Pressable, Text, View } from "react-native";
+import { FlatList, Pressable, View } from "react-native";
 import { CategoryBadge } from "../../components/Badge/CategoryBadge/CategoryBadge";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
 import useFetch from "../../hooks/useFetch";
-import { getProductCategories } from "../../api/products";
+import { ProductsApi } from "../../api/products";
 import { globalStyles } from "../styles";
 import { CategoryType } from "../../types/CategoryTypes";
+import { Loader } from "../../components/Loader/Loader";
 
 const Categories = () => {
   const router = useRouter();
@@ -13,14 +14,13 @@ const Categories = () => {
 
   useEffect(() => {
     (async () => {
-      router.push("/login");
-      await fetchData(() => getProductCategories());
+      await fetchData(() => ProductsApi.getProductCategories());
     })();
   }, []);
 
   return (
     <View style={globalStyles.container}>
-      {isLoading && <Text>Loading...</Text>}
+      {isLoading && <Loader />}
       <FlatList
         data={categories}
         contentContainerStyle={{ rowGap: 20 }}
