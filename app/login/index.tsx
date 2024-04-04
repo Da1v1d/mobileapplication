@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Pressable,
@@ -9,21 +10,32 @@ import {
 } from "react-native";
 import { globalStyles } from "../styles";
 import { styles } from "./styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthApi } from "../../api/auth";
 import { useUser } from "../../hooks/useUser";
 import { router } from "expo-router";
+import useFetch from "../../hooks/useFetch";
+import { UserType } from "../../types/UserTypes";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { fetchData, data, error } = useFetch<UserType>();
   const { setUserData } = useUser();
 
   const login = async () => {
-    const user = await AuthApi.login(username, password);
-    setUserData(user.data);
+    await fetchData(async () => AuthApi.login(username, password));
     router.back();
   };
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert(error);
+    }
+    if (data) {
+      setUserData(data);
+    }
+  }, [error, data]);
 
   return (
     <KeyboardAvoidingView

@@ -14,8 +14,8 @@ const useFetch = <D>() => {
       const response = await RequestFuntion();
       setError("");
       setData(response.data);
+      return response.data
     } catch (error) {
-      console.error(error);
       setError(error instanceof Error ? error.message : String(error));
       throw new Error(error instanceof Error ? error.message : String(error));
     } finally {

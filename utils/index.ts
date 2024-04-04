@@ -38,7 +38,7 @@ export const addOrRemoveFromWishlist = async (
     setWishlist((prev) => [...prev, product]);
     await AsyncStorage.setItem(
       "wishlist",
-      JSON.stringify([...storedWishlist, product])
+      JSON.stringify([storedWishlist, product])
     );
   }
 };
