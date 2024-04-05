@@ -1,13 +1,12 @@
-import { FC } from "react";
 import { Text, View } from "react-native";
 import { styles } from "./styles";
 
-type Type = {
-  data: number[];
+type Type<T> = {
+  data: T[];
   currentIndex: number;
 };
 
-export const Dots: FC<Type> = ({ data, currentIndex }) => {
+export const Dots = <T,>({ data, currentIndex }: Type<T>) => {
   return (
     <View style={styles.container}>
       {data.map((_, index) => (
