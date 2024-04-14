@@ -1,9 +1,9 @@
-import { Product } from "./ProductTypes";
+import { ProductType } from "./ProductTypes";
 
 export type CardsType = {
-  products: Product[];
+  products: ProductType[];
 };
 
 export type CardType = {
-  product: Product;
+  product: ProductType;
 };

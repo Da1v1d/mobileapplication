@@ -5,13 +5,13 @@ import useFetch from "../../hooks/useFetch";
 import { View } from "react-native";
 import { Cards } from "../../components/Cards/Cards";
 import { globalStyles } from "../styles";
-import { Products } from "../../types/ProductTypes";
-import { HeaderBack } from "../../components/Header/HeaderBack/HeaderBack";
-import { Loader } from "../../components/Loader/Loader";
+import { ProductsType } from "../../types/ProductTypes";
+import { HeaderBack } from "../../components/Header/HeaderBack";
+import { Loader } from "../../components/Loader";
 
 const Category = () => {
   const { category } = useLocalSearchParams();
-  const { fetchData, isLoading, data } = useFetch<Products>();
+  const { fetchData, isLoading, data } = useFetch<ProductsType>();
 
   useEffect(() => {
     (async () => {

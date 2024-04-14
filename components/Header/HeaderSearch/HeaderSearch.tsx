@@ -1,5 +1,6 @@
 import { FC, useEffect, useRef } from "react";
 import { TextInput } from "react-native";
+import { styles } from "./styles";
 
 type HeaderSearchType = {
   searchValue: string;
@@ -22,12 +23,7 @@ export const HeaderSearch: FC<HeaderSearchType> = ({
       value={searchValue}
       placeholder="Search"
       onChangeText={handleChange}
-      style={{
-        borderRadius: 5,
-        backgroundColor: "rgba(0,0,0,0.05)",
-        padding: 7,
-        width: 320,
-      }}
+      style={styles.search}
     />
   );
 };

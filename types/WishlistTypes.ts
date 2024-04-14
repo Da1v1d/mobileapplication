@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-import { Products } from "./ProductTypes";
+import { ProductsType } from "./ProductTypes";
 
-export type WishlistType = Products["products"];
+export type WishlistType = ProductsType["products"];
 
 export type WishlistContextType = {
   wishlist: WishlistType;

@@ -1,13 +1,13 @@
 import { AxiosResponse } from "axios";
 import { instance } from "../instance";
-import { Product, Products } from "../../types/ProductTypes";
+import { ProductType, ProductsType } from "../../types/ProductTypes";
 import { CategoryType } from "../../types/CategoryTypes";
 
 export class ProductService {
   static getByCategory(
     category: string,
     limit: number | null = null
-  ): Promise<AxiosResponse<Products>> {
+  ): Promise<AxiosResponse<ProductsType>> {
     return instance.get(`/products/category/${category}`, {
       params: { limit },
     });
@@ -17,11 +17,11 @@ export class ProductService {
     return instance.get("/products/categories");
   }
 
-  static getById(id: string): Promise<AxiosResponse<Product>> {
+  static getById(id: string): Promise<AxiosResponse<ProductType>> {
     return instance.get(`/products/${id}`);
   }
 
-  static getAll(q?: string): Promise<AxiosResponse<Products>> {
+  static getAll(q?: string): Promise<AxiosResponse<ProductsType>> {
     return instance.get(`/products${q ? "/search" : ""}`, { params: { q } });
   }
 }

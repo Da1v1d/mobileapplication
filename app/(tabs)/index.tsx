@@ -1,16 +1,16 @@
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { HomeCarousel } from "../../components/Carousel/HomeCarousel/HomeCarousel";
+import { HomeCarousel } from "../../components/Carousel/HomeCarousel";
 import { FlatList, Text, View } from "react-native";
 import { globalStyles } from "../styles";
 import { useEffect, useState } from "react";
 import { ProductsApi } from "../../api/products";
-import { Products } from "../../types/ProductTypes";
+import { ProductsType } from "../../types/ProductTypes";
 import { Cards } from "../../components/Cards/Cards";
 import { Link } from "expo-router";
-import { Loader } from "../../components/Loader/Loader";
+import { Loader } from "../../components/Loader";
 
 const Home = () => {
-  const [data, setData] = useState<Products["products"][] | null>(null);
+  const [data, setData] = useState<ProductsType["products"][] | null>(null);
 
   useEffect(() => {
     // ! Byyyyy What's this ? Are you sure about this ?

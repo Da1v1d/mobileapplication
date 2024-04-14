@@ -9,6 +9,8 @@ export const instance = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+// TODO need to refactor interceptors.
+
 instance.interceptors.request.use(
   async function (config: InternalAxiosRequestConfig) {
     // Get the access token from AsyncStorage
@@ -17,15 +19,13 @@ instance.interceptors.request.use(
     // If there's an access token, attach it to the Authorization header
     if (accessToken) {
       const expirationDate = new Date(jwtDecode(accessToken).exp!);
-
+      const expirationTimeStamp = Math.floor(expirationDate.getTime());
+      const currentTimeStamp = Math.floor(new Date().getTime() / 1000);
       if (config.url?.includes("auth")) {
         config.headers.Authorization = `Bearer ${accessToken}`;
-        // ! Check and refresh token before expiring 10 seconds before expires
-        if (
-          Math.floor(expirationDate.getTime()) -
-            Math.floor(new Date().getTime() / 1000) <
-          10
-        ) {
+
+        if (expirationTimeStamp - currentTimeStamp < 10) {
+          // Check and refresh token before expiring 10 seconds before expires
           const response = await axios({
             method: "post",
             url: "https://dummyjson.com/auth/refresh",
@@ -34,7 +34,6 @@ instance.interceptors.request.use(
               "Content-Type": "application/json",
             },
           });
-          console.log(response.data.token);
           await AsyncStorage.setItem("accessToken", response.data.token!);
           config.headers.Authorization = `Bearer ${response.data.token}`;
         }
@@ -74,28 +73,15 @@ instance.interceptors.response.use(
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        const a = await response.json();
-        if (a?.expiredAt) {
+        const data = await response.json();
+        if (data?.expiredAt) {
           await AsyncStorage.removeItem("accessToken");
           router.push("/");
           return;
         }
 
-        console.log(a);
-
-        // Extract the new access token from the response
-        // const newAccessToken = response.data.token;
-
-        // // Store the new access token in local storage
-        // await AsyncStorage.setItem("accessToken", newAccessToken as string);
-
-        // // Update the Authorization header with the new access token
-        // originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
-        // Retry the original request
         return axios(originalRequest);
       } catch (error) {
-        // Handle token refresh error (e.g., logout user)
         console.error("Failed to refresh token:", error);
         throw error;
       }

@@ -2,7 +2,7 @@ import { Image, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 import { FC } from "react";
 import { CardType } from "../../types/CardTypes";
-import { FavoriteButton } from "../Button/FavoriteButton/FavoriteButton";
+import { FavoriteButton } from "../Button/FavoriteButton";
 
 export const Card: FC<CardType> = ({ product }) => {
   const { rating, thumbnail, price, title } = product;

@@ -1,19 +1,19 @@
 import { Stack } from "expo-router";
-import { HeaderBack } from "../../components/Header/HeaderBack/HeaderBack";
+import { HeaderBack } from "../../components/Header/HeaderBack";
 import { View } from "react-native";
 import { useEffect, useState } from "react";
 import { HeaderSearch } from "../../components/Header/HeaderSearch/HeaderSearch";
 import useFetch from "../../hooks/useFetch";
-import { Products } from "../../types/ProductTypes";
+import { ProductsType } from "../../types/ProductTypes";
 import { ProductsApi } from "../../api/products";
 import { Cards } from "../../components/Cards/Cards";
 import { globalStyles } from "../styles";
-import { Loader } from "../../components/Loader/Loader";
+import { Loader } from "../../components/Loader";
 import { debounce } from "../../utils";
 
 const SearchPage = () => {
   const [searchValue, onChangeText] = useState("");
-  const { data, isLoading, fetchData } = useFetch<Products>();
+  const { data, isLoading, fetchData } = useFetch<ProductsType>();
 
   const handleChange = async (text: string) => {
     onChangeText(text);

@@ -1,11 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import { Image, ImageSourcePropType, Pressable } from "react-native";
-import { addOrRemoveFromWishlist, generateFavoriteIcon } from "../../../utils";
-import { Product } from "../../../types/ProductTypes";
-import { useUser } from "../../../hooks/useUser";
-import { useWishlist } from "../../../hooks/useWishlist";
+import { generateFavoriteIcon } from "../../utils";
+import { ProductType } from "../../types/ProductTypes";
+import { useUser } from "../../hooks/useUser";
+import { useWishlist } from "../../hooks/useWishlist";
+import { addOrRemoveFromWishlist } from "../../utils/wishlist";
 
-export const FavoriteButton: FC<Product> = (product) => {
+export const FavoriteButton: FC<ProductType> = (product) => {
   const [favoriteIcon, setFavoriteIcon] = useState<ImageSourcePropType>();
   const {
     userData: { username },

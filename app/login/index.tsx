@@ -24,18 +24,16 @@ const Login = () => {
   const { setUserData } = useUser();
 
   const login = async () => {
-    await fetchData(async () => AuthApi.login(username, password));
-    router.back();
+    await fetchData(() => AuthApi.login(username, password));
   };
 
+  // TODO  CHANGE THIS
   useEffect(() => {
-    if (error) {
-      Alert.alert(error);
-    }
     if (data) {
       setUserData(data);
+      router.back();
     }
-  }, [error, data]);
+  }, [data]);
 
   return (
     <KeyboardAvoidingView
@@ -51,7 +49,7 @@ const Login = () => {
         <Image source={require("../../assets/icons/big_logo.png")} />
       </View>
 
-      <View style={{ width: "100%", rowGap: 10 }}>
+      <View style={styles.form}>
         <Text style={styles.label}>
           UserName <Text style={styles.labelrequired}>*</Text>
         </Text>

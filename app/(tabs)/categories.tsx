@@ -6,7 +6,7 @@ import useFetch from "../../hooks/useFetch";
 import { ProductsApi } from "../../api/products";
 import { globalStyles } from "../styles";
 import { CategoryType } from "../../types/CategoryTypes";
-import { Loader } from "../../components/Loader/Loader";
+import { Loader } from "../../components/Loader";
 
 const Categories = () => {
   const router = useRouter();
@@ -14,7 +14,7 @@ const Categories = () => {
 
   useEffect(() => {
     (async () => {
-      await fetchData(() => ProductsApi.getProductCategories());
+      await fetchData(ProductsApi.getProductCategories);
     })();
   }, []);
 

@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
     rowGap: 30,
     alignItems: "center",
   },
+  form: { width: "100%", rowGap: 10 },
   input: {
     width: "100%",
     backgroundColor: "white",

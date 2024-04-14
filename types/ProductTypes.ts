@@ -1,13 +1,13 @@
 import { CategoryType } from "./CategoryTypes";
 
-export interface Products {
-  products: Product[];
+export interface ProductsType {
+  products: ProductType[];
   total: number;
   skip: number;
   limit: number;
 }
 
-export interface Product {
+export interface ProductType {
   id: number;
   title: string;
   description: string;

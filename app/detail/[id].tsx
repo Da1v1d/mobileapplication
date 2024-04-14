@@ -4,16 +4,16 @@ import { ProductsApi } from "../../api/products";
 import useFetch from "../../hooks/useFetch";
 import { Image, Text, View } from "react-native";
 import { globalStyles } from "../styles";
-import { Product } from "../../types/ProductTypes";
-import { DetailCarousel } from "../../components/Carousel/DetailCarousel/DetailCarousel";
-import { HeaderBack } from "../../components/Header/HeaderBack/HeaderBack";
+import { ProductType } from "../../types/ProductTypes";
+import { DetailCarousel } from "../../components/Carousel/DetailCarousel";
+import { HeaderBack } from "../../components/Header/HeaderBack";
 import { styles } from "./styles";
-import { FavoriteButton } from "../../components/Button/FavoriteButton/FavoriteButton";
-import { Loader } from "../../components/Loader/Loader";
+import { FavoriteButton } from "../../components/Button/FavoriteButton";
+import { Loader } from "../../components/Loader";
 
 const Category = () => {
   const { id } = useLocalSearchParams();
-  const { fetchData, isLoading, data: product } = useFetch<Product>();
+  const { fetchData, isLoading, data: product } = useFetch<ProductType>();
 
   useEffect(() => {
     (async () => {
